@@ -1,4 +1,4 @@
-using DataAdapterSharp.DataAdapter;
+using TreMorrisDev.DataAdapterSharp.DataAdapter;
 
 namespace ShopGen.Db;
 
