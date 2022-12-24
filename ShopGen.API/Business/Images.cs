@@ -2,7 +2,7 @@ namespace ShopGen.Business;
 
 public class Images
 {
-  private const string IMAGE_STORE = "/home/tremorris/image-store";
+  private const string IMAGE_STORE = "/data/shop-gen/img";
   public static IEnumerable<Guid> GetImages(Guid id)
   {
     var imgs = Db.Images.GetImages(id);
