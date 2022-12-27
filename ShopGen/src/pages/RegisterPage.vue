@@ -28,7 +28,7 @@ import { ref, computed, onBeforeMount } from 'vue'
 import useUser from '@/composables/user';
 import { useRouter } from 'vue-router';
 import { emailRules, passwordRules } from '@/validation';
-import { components } from 'vuetify/vuetify'
+import { VForm } from 'vuetify/lib/components/VForm/index'
 import api from '@/api';
 import User from '@/types/user';
 
@@ -42,7 +42,7 @@ const verifyPassword = ref('')
 const verifyRules = [() => verifyPassword.value === password.value || "Must match password", ...passwordRules]
 const isFilled = computed(() => !!email.value && !!password.value && !!verifyPassword.value)
 
-const form = ref<components.VForm>()
+const form = ref<VForm>()
 const isLoading = ref(false)
 const router = useRouter()
 const user = useUser()
