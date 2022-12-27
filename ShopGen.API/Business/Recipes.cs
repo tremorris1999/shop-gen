@@ -1,6 +1,6 @@
-using ShopGen.Data;
+using ShopGen.API.Data;
 
-namespace ShopGen.Business;
+namespace ShopGen.API.Business;
 
 public class Recipes
 {

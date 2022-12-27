@@ -1,6 +1,6 @@
 using TreMorrisDev.DataAdapterSharp.DataAdapter;
 
-namespace ShopGen.Db;
+namespace ShopGen.API.Db;
 
 public class Images
 {

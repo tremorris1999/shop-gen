@@ -1,8 +1,9 @@
 const Ingredient = () => ({
   id: '',
   recipeId: '',
+  creatorId: '',
   name: '',
-  quantity: undefined as unknown as number,
+  quantity: undefined as number | undefined,
   unit: ''
 })
 

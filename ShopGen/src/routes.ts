@@ -4,6 +4,8 @@ declare type PublicProps = VNodeProps & AllowedComponentProps & ComponentCustomP
 import HomePage from '@/pages/HomePage.vue'
 import AllRecipesPage from '@/pages/AllRecipesPage.vue'
 import PlanPage from '@/pages/PlanPage.vue'
+import LoginPage from '@/pages/LoginPage.vue'
+import RegisterPage from '@/pages/RegisterPage.vue'
 
 
 
@@ -17,6 +19,8 @@ export interface IRoute {
 
 export default [
   { path: '/', redirect: '/home' },
+  { path: '/login', component: LoginPage },
+  { path: '/register', component: RegisterPage },
   { name: 'Home', path: '/home', component: HomePage, icon: 'mdi-home' },
   { name: 'All Recipes', path: '/recipes', component: AllRecipesPage, icon: 'mdi-bowl-mix' },
   { name: 'My Plan', path: '/plan', component: PlanPage, icon: 'mdi-list-box' },

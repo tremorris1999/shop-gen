@@ -1,4 +1,4 @@
-namespace ShopGen.Business;
+namespace ShopGen.API.Business;
 
 public class Images
 {

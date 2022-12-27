@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using ShopGen.Business;
-using ShopGen.Data;
+using ShopGen.API.Business;
+using ShopGen.API.Data;
 
 namespace ShopGen.API.Controllers;
 

@@ -1,7 +1,6 @@
-using ShopGen.Data;
-using ShopGen.Db;
+using ShopGen.API.Data;
 
-namespace ShopGen.Business;
+namespace ShopGen.API.Business;
 
 public class Ingredients
 {

@@ -1,4 +1,15 @@
-using ShopGen.Utility;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using ShopGen.API.Utility;
+
+string hashKey = JsonSerializer.Deserialize<JsonNode>(
+  File.ReadAllText("appsettings.json"))
+    ?["Keys"]
+    ?["HashKey"]
+    ?.GetValue<string>()
+    ?? throw new ApplicationException("Unable to load hash key");
+    
+StringHasher.Configure(hashKey);
 
 var builder = WebApplication.CreateBuilder(args);
 

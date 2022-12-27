@@ -1,11 +1,12 @@
 import Recipe from "./types/recipe"
 import axios from "axios"
 import Ingredient from "@/types/ingredient"
+import User from "./types/user"
 
 const baseURL = import.meta.env.VITE_API
 const api = axios.create({ baseURL })
 
-api.interceptors.response.use(value => value.data, error => Promise.reject(error))
+api.interceptors.response.use(value => value.data, error => Promise.reject(error.response?.data || error))
 
 export default ({
   imageURL: `${baseURL}/Images/Get`,
@@ -28,5 +29,8 @@ export default ({
         'Content-Type': 'multipart/form-data'
       }
     })
-  }
+  },
+
+  login: async (user: User) => await api.post<null, User>('/Auth/Login', user),
+  register: async (user: User) => await api.post<null, User>('/Auth/Register', user)
 })

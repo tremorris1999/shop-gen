@@ -1,4 +1,4 @@
-namespace ShopGen.Data;
+namespace ShopGen.API.Data;
 
 public class Recipe
 {

@@ -1,7 +1,7 @@
 using TreMorrisDev.DataAdapterSharp.DataAdapter;
-using ShopGen.Data;
+using ShopGen.API.Data;
 
-namespace ShopGen.Db;
+namespace ShopGen.API.Db;
 
 public class Recipes
 {
