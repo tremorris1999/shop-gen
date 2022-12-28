@@ -45,9 +45,18 @@ import useUser from './composables/user'
 const shouldShowDrawer = ref(false)
 const toggleDrawer = () => shouldShowDrawer.value = !shouldShowDrawer.value
 
+const user = useUser()
+const isLoggedIn = computed(() => !!user.getCurrentUser().id)
+const logout = () => user.setCurrentUser(undefined)
+
 const router = useRouter()
 const currentRoute = computed(() => router.currentRoute.value.name)
-const availableRoutes = routes.filter(route => route.name && route.icon)
+const availableRoutes = computed(() => routes.filter(route => {
+  const isVisible = (!!route.loggedIn && isLoggedIn.value) || !route.loggedIn
+  const isPublic = !!route.name && !!route.icon
+  return isVisible && isPublic
+}))
+
 const navigate = (path: string) => router.push(path)
 
 const plan = usePlan()
@@ -56,8 +65,4 @@ const planLength = computed(() => {
   const length = items.length
   return length > 8 ? '9+' : length
 })
-
-const user = useUser()
-const isLoggedIn = computed(() => !!user.getCurrentUser().id)
-const logout = () => user.setCurrentUser(undefined)
 </script>

@@ -28,7 +28,7 @@ import { ref, computed, onBeforeMount } from 'vue'
 import useUser from '@/composables/user';
 import { useRouter } from 'vue-router';
 import { emailRules, passwordRules } from '@/validation';
-import { VForm } from 'vuetify/lib/components/VForm/index'
+import { VForm } from 'vuetify/lib/components/index'
 import api from '@/api';
 import User from '@/types/user';
 

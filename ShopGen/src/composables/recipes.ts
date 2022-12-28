@@ -6,6 +6,7 @@ const recipes = ref([] as Recipe[])
 api
   .getRecipes()
   .then(res => recipes.value = res)
+  .then(() => console.log(recipes.value))
 
 export default () => {
   return {

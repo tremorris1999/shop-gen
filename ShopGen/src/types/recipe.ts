@@ -2,6 +2,7 @@ import Ingredient from "./ingredient";
 
 const Recipe = () => ({
   id: '',
+  creatorId: '',
   name: '',
   description: '',
   ingredients: [] as Ingredient[],

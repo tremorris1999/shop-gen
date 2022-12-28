@@ -6,6 +6,7 @@ import AllRecipesPage from '@/pages/AllRecipesPage.vue'
 import PlanPage from '@/pages/PlanPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import RegisterPage from '@/pages/RegisterPage.vue'
+import MyRecipesPage from '@/pages/MyRecipes.vue'
 
 
 
@@ -15,6 +16,7 @@ export interface IRoute {
   redirect: string | undefined,
   component: DefineComponent<{}, {}, {}, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, PublicProps, Readonly<ExtractPropTypes<{}>>, {}> | undefined,
   icon: string | undefined
+  loggedIn: boolean | undefined
 }
 
 export default [
@@ -23,6 +25,7 @@ export default [
   { path: '/register', component: RegisterPage },
   { name: 'Home', path: '/home', component: HomePage, icon: 'mdi-home' },
   { name: 'All Recipes', path: '/recipes', component: AllRecipesPage, icon: 'mdi-bowl-mix' },
+  { name: 'My Recipes', path: '/myrecipes', component: MyRecipesPage, icon: 'mdi-chef-hat', loggedIn: true },
   { name: 'My Plan', path: '/plan', component: PlanPage, icon: 'mdi-list-box' },
-  { name: 'Settings', path: '/settings', icon: 'mdi-cog'}
+  { name: 'Settings', path: '/settings', icon: 'mdi-cog' },
 ] as IRoute[]
