@@ -12,7 +12,7 @@
           <tr>
             <td> Theme </td>
             <td>
-              <v-switch v-model="isDarkTheme" prepend-icon="mdi-weather-sunny">
+              <v-switch v-model="isDarkTheme" prepend-icon="mdi-weather-sunny" class="pt-5">
                 <template v-slot:label>
                   <v-icon icon="mdi-weather-night" />
                 </template>
