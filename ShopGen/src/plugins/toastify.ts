@@ -5,10 +5,10 @@ const toastify = Vue3Toastify
 const options: ToastContainerOptions = {
   autoClose: 2500,
   closeOnClick: true,
-  closeButton: false
+  closeButton: false,
 }
 
 export default {
   toastify,
-  options
+  options,
 }

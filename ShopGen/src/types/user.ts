@@ -2,7 +2,7 @@ const User = () => ({
   id: '',
   email: '',
   password: '',
-  dateCreated: new Date()
+  dateCreated: new Date(),
 })
 
 type User = ReturnType<typeof User>

@@ -6,12 +6,13 @@ export const emailRules = [
     return !!matches?.length || 'Must be a valid email address'
   },
   (email?: string) => {
-    const invalid = ['\'', '\`', '\<', '\>', '\-', '&lt;', '&gt;']
+    // eslint-disable-next-line quotes
+    const invalid = ["'", '`', '<', '>', '-', '&lt;', '&gt;']
     const strikes = invalid.filter(str => email?.includes(str) ?? false)
     return strikes.length === 0 || 'Invalid input'
-  }
+  },
 ]
 
 export const passwordRules = [
-  (password: string) => !!password || 'Field is required'
+  (password: string) => !!password || 'Field is required',
 ]

@@ -13,7 +13,7 @@ import toastify from './toastify'
 // Types
 import type { App } from 'vue'
 
-export function registerPlugins (app: App) {
+export function registerPlugins(app: App) {
   loadFonts()
   app.use(vuetify)
   app.use(router)

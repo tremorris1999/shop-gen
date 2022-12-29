@@ -3,7 +3,7 @@ const Ingredient = () => ({
   recipeId: '',
   name: '',
   quantity: undefined as number | undefined,
-  unit: ''
+  unit: '',
 })
 
 type Ingredient = ReturnType<typeof Ingredient>

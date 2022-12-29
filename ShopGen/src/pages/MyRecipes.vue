@@ -1,35 +1,48 @@
 <template>
   <v-container class="container">
-    <v-text-field class="search mb-3" v-model="query" prepend-icon="mdi-magnify" single-line hide-details
-      placeholder="Search..." />
+    <v-text-field
+      class="search mb-3"
+      v-model="query"
+      prepend-icon="mdi-magnify"
+      single-line
+      hide-details
+      placeholder="Search..."
+    />
     <v-row justify="center" class="mx-auto mt-2 mb-4">
       <v-btn class="button" color="primary" variant="outlined">
         <v-icon icon="mdi-plus" /> Add
         <v-dialog v-model="isEditing" activator="parent">
-          <RecipeForm @close="(isEditing = false)" />
+          <RecipeForm @close="isEditing = false" />
         </v-dialog>
       </v-btn>
     </v-row>
-    <RecipeCard v-if="!isLoading" v-for="recipe in filteredRecipes" :recipe="recipe" class="mb-12"
-      @update="(isEditing = false)" />
+    <template v-if="!isLoading">
+      <RecipeCard
+        v-for="recipe in filteredRecipes"
+        :key="recipe.id"
+        :recipe="recipe"
+        class="mb-12"
+        @update="isEditing = false"
+      />
+    </template>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onBeforeMount } from 'vue';
-import RecipeCard from '@/components/RecipeCard.vue';
-import RecipeForm from '@/components/RecipeForm.vue';
+import { computed, ref, onBeforeMount } from 'vue'
+import RecipeCard from '@/components/RecipeCard.vue'
+import RecipeForm from '@/components/RecipeForm.vue'
 import useRecipes from '@/composables/recipes'
-import useUser from '@/composables/user';
-import { useRouter } from 'vue-router';
+import useUser from '@/composables/user'
+import { useRouter } from 'vue-router'
 
 const { recipes } = useRecipes()
 const user = useUser()
 const filteredRecipes = computed(() => {
   const regex = new RegExp(`^${query.value}`)
   const filtered = query.value
-  ? recipes.value.filter(r => regex.test(r.name))
-  : recipes.value
+    ? recipes.value.filter(r => regex.test(r.name))
+    : recipes.value
   return filtered.filter(r => r.creatorId === user.getCurrentUser().id)
 })
 
@@ -40,8 +53,7 @@ const isEditing = ref(false)
 
 const router = useRouter()
 onBeforeMount(() => {
-  if (!user.getCurrentUser().id)
-    router.push('/home')
+  if (!user.getCurrentUser().id) router.push('/home')
 })
 </script>
 

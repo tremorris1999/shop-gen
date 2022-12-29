@@ -1,7 +1,7 @@
 const Image = () => ({
   id: '',
   path: '',
-  file: File
+  file: File,
 })
 
 type Image = ReturnType<typeof Image>

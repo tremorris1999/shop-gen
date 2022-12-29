@@ -15,8 +15,7 @@ const addToPlan = (id: string) => {
 
 const removeFromPlan = (id: string) => {
   const index = plan.value.findIndex(recipeId => recipeId === id)
-  if (index > -1)
-    plan.value.splice(index, 1)
+  if (index > -1) plan.value.splice(index, 1)
 
   localStorage.setItem('shopgen-my-plan', plan.value.join(','))
 }
@@ -26,7 +25,7 @@ export const usePlan = () => {
     getPlanItems,
     addToPlan,
     removeFromPlan,
-    clearPlan
+    clearPlan,
   }
 }
 

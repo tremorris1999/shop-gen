@@ -1,14 +1,33 @@
 <template>
   <v-card width="336px">
-    <v-carousel v-if="hasImages" cycle :interval="4000" hide-delimiter-background :show-arrows="false" height="225px">
-      <v-carousel-item v-for="id in recipe.imageIds" :src="getSource(id)" cover />
+    <v-carousel
+      v-if="hasImages"
+      cycle
+      :interval="4000"
+      hide-delimiter-background
+      :show-arrows="false"
+      height="225px"
+    >
+      <v-carousel-item
+        v-for="(id, index) in recipe.imageIds"
+        :key="index"
+        :src="getSource(id)"
+        cover
+      />
     </v-carousel>
     <v-card-title>
       <span>{{ recipe.name }}</span>
-      <v-btn v-if="canEdit" icon rounded size="x-small" style="float: right;" variant="tonal">
+      <v-btn
+        v-if="canEdit"
+        icon
+        rounded
+        size="x-small"
+        style="float: right"
+        variant="tonal"
+      >
         <v-icon icon="mdi-pencil" />
         <v-dialog v-model="isEditing" activator="parent" scrollable persistent>
-          <RecipeForm :recipe="recipe" @close="(isEditing = false)" />
+          <RecipeForm :recipe="recipe" @close="isEditing = false" />
         </v-dialog>
       </v-btn>
     </v-card-title>
@@ -16,35 +35,58 @@
       {{ recipe.description }}
     </v-card-text>
     <v-card-actions>
-      <IngredientsTable :id="recipe.id" :name="recipe.name" :readonly="readonly" />
-      <v-btn v-if="!readonly" color="secondary" variant="elevated" elevation="6" @click="plan.addToPlan(recipe.id)">
+      <IngredientsTable
+        :id="recipe.id"
+        :name="recipe.name"
+        :readonly="readonly"
+      />
+      <v-btn
+        v-if="!readonly"
+        color="secondary"
+        variant="elevated"
+        elevation="6"
+        @click="plan.addToPlan(recipe.id)"
+      >
         Add To Plan
       </v-btn>
-      <v-btn v-if="readonly" color="error" variant="elevated" elevation="6" @click="plan.removeFromPlan(recipe.id)">
+      <v-btn
+        v-if="readonly"
+        color="error"
+        variant="elevated"
+        elevation="6"
+        @click="plan.removeFromPlan(recipe.id)"
+      >
         Remove
       </v-btn>
-      <v-btn v-if="!readonly" :icon="favoriteIcon" :color="favoriteColor" @click="toggleFavorite"/>
+      <v-btn
+        v-if="!readonly"
+        :icon="favoriteIcon"
+        :color="favoriteColor"
+        @click="toggleFavorite"
+      />
     </v-card-actions>
   </v-card>
 </template>
 
 <script setup lang="ts">
-import api from '@/api';
-import Recipe from '@/types/recipe';
-import { ref, computed } from 'vue';
-import IngredientsTable from './IngredientsTable.vue';
-import RecipeForm from './RecipeForm.vue';
-import usePlan from '@/composables/plan';
-import useUser from '@/composables/user';
+import api from '@/api'
+import Recipe from '@/types/recipe'
+import { ref, computed } from 'vue'
+import IngredientsTable from './IngredientsTable.vue'
+import RecipeForm from './RecipeForm.vue'
+import usePlan from '@/composables/plan'
+import useUser from '@/composables/user'
 import useFavorites from '@/composables/favorites'
 
 const props = defineProps<{
-  recipe: Recipe,
+  recipe: Recipe
   readonly?: boolean
 }>()
 
 const user = useUser()
-const canEdit = computed(() => !props.readonly && props.recipe.creatorId === user.getCurrentUser().id)
+const canEdit = computed(
+  () => !props.readonly && props.recipe.creatorId === user.getCurrentUser().id
+)
 const hasImages = computed(() => !!props.recipe.imageIds?.length ?? 0)
 const isEditing = ref(false)
 
@@ -53,14 +95,18 @@ const getSource = (id: string) => `${api.imageURL}/${id}`
 const plan = usePlan()
 
 const favorites = useFavorites()
-const isFavorite = computed(() => favorites.getFavorites().includes(props.recipe.id))
-const favoriteIcon = computed<string>(() => isFavorite.value ? 'mdi-heart' : 'mdi-heart-outline')
-const favoriteColor = computed<string>(() => isFavorite.value ? 'error' : 'default')
+const isFavorite = computed(() =>
+  favorites.getFavorites().includes(props.recipe.id)
+)
+const favoriteIcon = computed<string>(() =>
+  isFavorite.value ? 'mdi-heart' : 'mdi-heart-outline'
+)
+const favoriteColor = computed<string>(() =>
+  isFavorite.value ? 'error' : 'default'
+)
 const toggleFavorite = () => {
   console.log(isFavorite.value)
-  if (isFavorite.value)
-    favorites.removeFromFavorites(props.recipe.id)
-  else
-    favorites.addToFavorites(props.recipe.id)
+  if (isFavorite.value) favorites.removeFromFavorites(props.recipe.id)
+  else favorites.addToFavorites(props.recipe.id)
 }
 </script>

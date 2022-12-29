@@ -4,15 +4,19 @@
       <v-table>
         <thead>
           <tr>
-            <th> Setting </th>
-            <th> Value </th>
+            <th>Setting</th>
+            <th>Value</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td> Theme </td>
+            <td>Theme</td>
             <td>
-              <v-switch v-model="isDarkTheme" prepend-icon="mdi-weather-sunny" class="pt-5">
+              <v-switch
+                v-model="isDarkTheme"
+                prepend-icon="mdi-weather-sunny"
+                class="pt-5"
+              >
                 <template v-slot:label>
                   <v-icon icon="mdi-weather-night" />
                 </template>
@@ -33,9 +37,7 @@ const currentTheme = useTheme()
 const isDarkTheme = ref(currentTheme.getTheme() === 'dark')
 
 watch(isDarkTheme, async newValue => {
-  if (newValue)
-    currentTheme.setTheme('dark')
-  else
-    currentTheme.setTheme('light')
+  if (newValue) currentTheme.setTheme('dark')
+  else currentTheme.setTheme('light')
 })
 </script>

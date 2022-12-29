@@ -6,12 +6,19 @@
     "dev:host": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
     "build:forceprod": "vue-tsc --noEmit && vite build --mode production",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint --ext .js,.ts,.vue .",
+    "lint:fix": "eslint --fix --ext .js,.ts,.vue .",
+    "format": "prettier --check --ignore-path .gitignore dist/ --write .",
+    "format:fix": "prettier --ignore-path .gitignore dist/ --write ."
   },
   "dependencies": {
     "@babel/types": "^7.20.5",
     "@mdi/font": "7.0.96",
     "axios": "^1.2.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.1",
     "roboto-fontface": "*",
     "simple-vue-camera": "^1.1.2",
     "vue": "^3.2.38",
@@ -23,7 +30,11 @@
   "devDependencies": {
     "@types/node": "^18.11.9",
     "@types/webfontloader": "^1.6.35",
+    "@typescript-eslint/eslint-plugin": "^5.47.1",
+    "@typescript-eslint/parser": "^5.47.1",
     "@vitejs/plugin-vue": "^3.0.3",
+    "eslint": "^8.30.0",
+    "eslint-plugin-vue": "^9.8.0",
     "typescript": "^4.0.0",
     "vite": "^3.0.9",
     "vite-plugin-vuetify": "^1.0.0-alpha.12",

@@ -16,7 +16,7 @@
     "types": ["vuetify", "vite/client"],
     "paths": {
       "@/*": ["src/*"]
-    },
+    }
   },
   "include": [
     "src/**/*.ts",

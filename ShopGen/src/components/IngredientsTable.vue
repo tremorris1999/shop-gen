@@ -1,10 +1,22 @@
 <template>
-  <v-btn color="primary" variant="elevated" elevation="6" @click="getIngredients">
+  <v-btn
+    color="primary"
+    variant="elevated"
+    elevation="6"
+    @click="getIngredients"
+  >
     Show Details
-    <v-dialog v-if="hasLoadedIngredients" v-model="isShowingIngredients" activator="parent" scrollable>
+    <v-dialog
+      v-if="hasLoadedIngredients"
+      v-model="isShowingIngredients"
+      activator="parent"
+      scrollable
+    >
       <v-card width="336px" class="ma-auto">
-        <v-card-title v-text="name" />
-        <v-card-text style="max-height: 336px;">
+        <v-card-title>
+          {{ name }}
+        </v-card-title>
+        <v-card-text style="max-height: 336px">
           <v-table>
             <thead>
               <tr>
@@ -13,7 +25,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="ingredient in ingredients">
+              <tr v-for="ingredient in ingredients" :key="ingredient.id">
                 <td>{{ ingredient.name }}</td>
                 <td>{{ ingredient.quantity }} {{ ingredient.unit }}</td>
               </tr>
@@ -21,9 +33,18 @@
           </v-table>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="primary" variant="tonal" @click="isShowingIngredients = false">Close</v-btn>
-          <v-btn v-if="!readonly" color="secondary" variant="tonal">Add To Plan</v-btn>
-          <v-btn v-if="readonly" color="error" variant="tonal">Remove From Plan</v-btn>
+          <v-btn
+            color="primary"
+            variant="tonal"
+            @click="isShowingIngredients = false"
+            >Close</v-btn
+          >
+          <v-btn v-if="!readonly" color="secondary" variant="tonal"
+            >Add To Plan</v-btn
+          >
+          <v-btn v-if="readonly" color="error" variant="tonal"
+            >Remove From Plan</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -31,14 +52,14 @@
 </template>
 
 <script setup lang="ts">
-import api from '@/api';
-import Ingredient from '@/types/ingredient';
-import { ref, computed } from 'vue';
-import { toast } from 'vue3-toastify';
+import api from '@/api'
+import Ingredient from '@/types/ingredient'
+import { ref, computed } from 'vue'
+import { toast } from 'vue3-toastify'
 
 const props = defineProps<{
-  id: string,
-  name: string,
+  id: string
+  name: string
   readonly?: boolean
 }>()
 

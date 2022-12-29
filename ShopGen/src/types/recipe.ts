@@ -1,4 +1,4 @@
-import Ingredient from "./ingredient";
+import Ingredient from './ingredient'
 
 const Recipe = () => ({
   id: '',
@@ -6,7 +6,7 @@ const Recipe = () => ({
   name: '',
   description: '',
   ingredients: [] as Ingredient[],
-  imageIds: [] as string[]
+  imageIds: [] as string[],
 })
 
 type Recipe = ReturnType<typeof Recipe>
