@@ -1,6 +1,6 @@
 <template>
   <v-btn color="primary" variant="elevated" elevation="6" @click="getIngredients">
-        Show Ingredients
+        Show Details
         <v-dialog v-if="hasLoadedIngredients" v-model="isShowingIngredients" activator="parent" scrollable>
           <v-card width="336px" class="ma-auto">
             <v-card-title v-text="name" />

@@ -8,8 +8,10 @@ api
   .then(res => recipes.value = res)
   .then(() => console.log(recipes.value))
 
-export default () => {
+const useRecipes = () => {
   return {
     recipes
   }
 }
+
+export default useRecipes

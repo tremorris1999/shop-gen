@@ -11,8 +11,8 @@
       </v-card-actions>
     </v-card>
     <v-row justify="center">
-      <v-btn v-if="hasRecipes" color="error" class="mt-3 mb-9 mx-2" variant="tonal" @click="plan.clearPlan" > Clear Plan </v-btn>
       <v-btn v-if="hasRecipes" color="secondary" class="mt-3 mb-9 mx-2" variant="tonal" > Generate List </v-btn>
+      <v-btn v-if="hasRecipes" color="error" class="mt-3 mb-9 mx-2" variant="tonal" @click="plan.clearPlan" > Clear Plan </v-btn>
     </v-row>
     <RecipeCard v-for="recipe in plannedRecipes" :recipe="recipe" readonly class="mb-12" />
   </v-container>

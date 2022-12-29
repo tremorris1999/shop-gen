@@ -1,5 +1,5 @@
 <template>
-  <v-app theme="dark">
+  <v-app :theme="theme.getTheme()">
     <v-app-bar>
       <v-app-bar-nav-icon icon="mdi-menu" @click.stop="toggleDrawer" />
       <v-app-bar-title>{{ currentRoute }}</v-app-bar-title>
@@ -41,6 +41,9 @@ import routes from './routes'
 import { useRouter } from 'vue-router'
 import usePlan from './composables/plan'
 import useUser from './composables/user'
+import useTheme from './composables/theme'
+
+const theme = useTheme()
 
 const shouldShowDrawer = ref(false)
 const toggleDrawer = () => shouldShowDrawer.value = !shouldShowDrawer.value

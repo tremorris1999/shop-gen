@@ -23,6 +23,7 @@
       <v-btn v-if="readonly" color="error" variant="elevated" elevation="6" @click="plan.removeFromPlan(recipe.id)">
         Remove
       </v-btn>
+      <v-btn v-if="!readonly" :icon="favoriteIcon" :color="favoriteColor" @click="toggleFavorite"/>
     </v-card-actions>
   </v-card>
 </template>
@@ -35,6 +36,7 @@ import IngredientsTable from './IngredientsTable.vue';
 import RecipeForm from './RecipeForm.vue';
 import usePlan from '@/composables/plan';
 import useUser from '@/composables/user';
+import useFavorites from '@/composables/favorites'
 
 const props = defineProps<{
   recipe: Recipe,
@@ -49,4 +51,16 @@ const isEditing = ref(false)
 const getSource = (id: string) => `${api.imageURL}/${id}`
 
 const plan = usePlan()
+
+const favorites = useFavorites()
+const isFavorite = computed(() => favorites.getFavorites().includes(props.recipe.id))
+const favoriteIcon = computed<string>(() => isFavorite.value ? 'mdi-heart' : 'mdi-heart-outline')
+const favoriteColor = computed<string>(() => isFavorite.value ? 'error' : 'default')
+const toggleFavorite = () => {
+  console.log(isFavorite.value)
+  if (isFavorite.value)
+    favorites.removeFromFavorites(props.recipe.id)
+  else
+    favorites.addToFavorites(props.recipe.id)
+}
 </script>
