@@ -25,12 +25,13 @@
 
 <script setup lang="ts">
 import { ref, computed, onBeforeMount } from 'vue'
-import useUser from '@/composables/user';
-import { useRouter } from 'vue-router';
-import { emailRules, passwordRules } from '@/validation';
+import useUser from '@/composables/user'
+import { useRouter } from 'vue-router'
+import { emailRules, passwordRules } from '@/validation'
 import { VForm } from 'vuetify/lib/components/index'
-import api from '@/api';
-import User from '@/types/user';
+import api from '@/api'
+import User from '@/types/user'
+import { toast } from 'vue3-toastify'
 
 const isPasswordVisible = ref(false)
 const type = computed(() => isPasswordVisible.value ? 'text' : 'password')
@@ -58,7 +59,7 @@ const submit = async () => {
     user.setCurrentUser(newUser)
     router.push('/home')
     } catch (err: any) {
-      console.log(err)
+      toast.error(err)
     }
 
     isLoading.value = false

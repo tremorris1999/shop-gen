@@ -28,6 +28,7 @@ import { emailRules, passwordRules } from '@/validation'
 import { useUser } from '@/composables/user'
 import User from '@/types/user';
 import api from '@/api';
+import { toast } from 'vue3-toastify';
 
 const router = useRouter()
 
@@ -46,8 +47,8 @@ const login = async () => {
 
     user.setCurrentUser(currentUser)
     router.push('/home')
-  } catch (err) {
-    console.log(err)
+  } catch (err: any) {
+    toast.error(err)
   }
   isLoggingIn.value = false
 }

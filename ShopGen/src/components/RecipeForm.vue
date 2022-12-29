@@ -11,10 +11,10 @@
               <v-text-field class="field" v-model="i.name" label="Name" readonly :title="i.name" />
             </v-col>
             <v-col cols="3">
-              <v-text-field class="field" v-model="i.quantity" label="#" readonly :title="i.quantity"/>
+              <v-text-field class="field" v-model="i.quantity" label="#" readonly :title="i.quantity" />
             </v-col>
             <v-col cols="3">
-              <v-text-field class="field" v-model="i.unit" label="Unit" readonly :title="i.unit"/>
+              <v-text-field class="field" v-model="i.unit" label="Unit" readonly :title="i.unit" />
             </v-col>
             <v-col cols="2">
               <v-btn icon="mdi-delete" @click="removeIngredient(i)" />
@@ -38,14 +38,14 @@
         <v-row v-for="imageId in currentImageIds" justify="start">
           <Thumbnail :maxHeight="118" :src="imageId" @remove="queueImageDelete" />
         </v-row>
-        <v-file-input v-model="images" label="Add Images..." variant="filled" prepend-icon="mdi-camera"
-          accept="image/*" multiple />
+        <v-file-input v-model="images" label="Add Images..." variant="filled" prepend-icon="mdi-camera" accept="image/*"
+          multiple />
       </v-form>
     </v-card-text>
     <v-card-actions>
-      <v-btn color="primary" variant="tonal" @click="save" :loading="isSaving" >Save</v-btn>
-      <v-btn color="secondary" variant="tonal" @click="cancel" :disabled="isSaving" >Cancel</v-btn>
-      <v-btn v-if="!newItem" color="error" variant="tonal" @click="remove" :disabled="isSaving" >Delete</v-btn>
+      <v-btn color="primary" variant="tonal" @click="save" :loading="isSaving">Save</v-btn>
+      <v-btn color="secondary" variant="tonal" @click="cancel" :disabled="isSaving">Cancel</v-btn>
+      <v-btn v-if="!newItem" color="error" variant="tonal" @click="remove" :disabled="isSaving">Delete</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -57,6 +57,7 @@ import Ingredient from '@/types/ingredient';
 import Recipe from '@/types/recipe';
 import { ref, onMounted, computed, onBeforeMount } from 'vue';
 import Thumbnail from './Thumbnail.vue';
+import { toast } from 'vue3-toastify';
 
 const props = defineProps<{
   recipe?: Recipe
@@ -68,7 +69,11 @@ const emit = defineEmits<{
 
 onBeforeMount(async () => {
   if (props.recipe)
-  currentRecipe.value.ingredients = await api.getIngredients(props.recipe?.id)
+  try {
+    currentRecipe.value.ingredients = await api.getIngredients(props.recipe?.id)
+  } catch (err: any) {
+    toast.error('Unable to fetch ingredients.')
+  }
 })
 
 onMounted(() => {
@@ -81,7 +86,7 @@ const allIngredientNames = computed(() => allIngredients.value.map(i => i.name))
 api.getAllIngredients().then(res => allIngredients.value = res)
 
 const newItem = computed(() => !props.recipe)
-const currentRecipe = ref({...props.recipe ?? Recipe()})
+const currentRecipe = ref({ ...props.recipe ?? Recipe() })
 const currentIngredient = ref(Ingredient())
 const currentImageIds = ref([] as string[])
 
@@ -100,7 +105,6 @@ const removeIngredient = (ingredient: Ingredient) => {
 const imageDeleteQueue = ref([] as string[])
 const queueImageDelete = (id: string) => {
   imageDeleteQueue.value.push(id)
-  console.log(currentImageIds.value)
   const index = currentImageIds.value.findIndex(i => i === id)
   if (index > -1)
     currentImageIds.value.splice(index, 1)
@@ -118,26 +122,36 @@ const save = async () => {
   isSaving.value = true
   const index = recipes.value.findIndex(r => r.id === currentRecipe.value.id ?? '')
   if (index > -1) {
-    await api.putRecipe(currentRecipe.value)
-    for (let i = 0; i < images.value.length; i++) {
-      await api.postImage(currentRecipe.value.id, images.value[i])
-    }
+    try {
+      await api.putRecipe(currentRecipe.value)
+      for (let i = 0; i < images.value.length; i++) {
+        await api.postImage(currentRecipe.value.id, images.value[i])
+      }
 
-    for (let i = 0; i < imageDeleteQueue.value.length; i++) {
-      await api.deleteImage(imageDeleteQueue.value[i])
-    }
+      for (let i = 0; i < imageDeleteQueue.value.length; i++) {
+        await api.deleteImage(imageDeleteQueue.value[i])
+      }
 
-    currentRecipe.value.imageIds = await api.getImages(currentRecipe.value.id)
-    recipes.value.splice(index, 1, currentRecipe.value)
+      currentRecipe.value.imageIds = await api.getImages(currentRecipe.value.id)
+      recipes.value.splice(index, 1, currentRecipe.value)
+      toast.success('Successfully updated recipe.')
+    } catch {
+      toast.error('Unable to update recipe.')
+    }
   }
   else {
-    currentRecipe.value.id = await api.postRecipe(currentRecipe.value)
-    for (let i = 0; i < images.value.length; i++) {
-      await api.postImage(currentRecipe.value.id, images.value[i])
-    }
+    try {
+      currentRecipe.value.id = await api.postRecipe(currentRecipe.value)
+      for (let i = 0; i < images.value.length; i++) {
+        await api.postImage(currentRecipe.value.id, images.value[i])
+      }
 
-    currentRecipe.value.imageIds = await api.getImages(currentRecipe.value.id)
-    recipes.value.splice(0, 0, currentRecipe.value)
+      currentRecipe.value.imageIds = await api.getImages(currentRecipe.value.id)
+      recipes.value.splice(0, 0, currentRecipe.value)
+      toast.success('Successfully added new recipe.')
+    } catch {
+      toast.error('Unable to save new recipe.')
+    }
   }
 
   isSaving.value = false
@@ -147,8 +161,13 @@ const save = async () => {
 const remove = async () => {
   let index = recipes.value.findIndex(r => r.id === props.recipe?.id)
   if (index > -1) {
-    await api.deleteRecipe(props.recipe?.id ?? '')
-    recipes.value.splice(index, 1)
+    try {
+      await api.deleteRecipe(props.recipe?.id ?? '')
+      recipes.value.splice(index, 1)
+      toast.success('Successfully removed recipe.')
+    } catch {
+      toast.error('Unable to remove recipe.')
+    }
   }
 
   emit('close')
