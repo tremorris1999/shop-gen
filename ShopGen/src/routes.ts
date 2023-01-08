@@ -1,17 +1,3 @@
-import {
-  DefineComponent,
-  ComponentOptionsMixin,
-  ExtractPropTypes,
-  VNodeProps,
-  AllowedComponentProps,
-  ComponentCustomProps,
-  MethodOptions,
-  EmitsOptions,
-} from 'vue'
-declare type PublicProps = VNodeProps &
-  AllowedComponentProps &
-  ComponentCustomProps
-
 import HomePage from '@/pages/HomePage.vue'
 import AllRecipesPage from '@/pages/AllRecipesPage.vue'
 import PlanPage from '@/pages/PlanPage.vue'
@@ -21,29 +7,12 @@ import MyRecipesPage from '@/pages/MyRecipes.vue'
 import FavoritesPage from '@/pages/FavoritesPage.vue'
 import SettingsPage from '@/pages/SettingsPage.vue'
 
-export interface IRoute {
-  name: string | undefined
-  path: string
-  redirect: string | undefined
-  component:
-    | DefineComponent<
-        object,
-        object,
-        object,
-        ComponentOptionsMixin,
-        MethodOptions,
-        ComponentOptionsMixin,
-        ComponentOptionsMixin,
-        EmitsOptions,
-        string,
-        PublicProps,
-        Readonly<ExtractPropTypes<object>>,
-        object
-      >
-    | undefined
-  icon: string | undefined
-  loggedIn: boolean | undefined
-}
+export const Route = () => ({
+  icon: '',
+  loggedIn: false,
+})
+
+export type Route = ReturnType<typeof Route>
 
 export default [
   { path: '/', redirect: '/home' },
@@ -77,4 +46,4 @@ export default [
     component: SettingsPage,
     icon: 'mdi-cog',
   },
-] as IRoute[]
+]
