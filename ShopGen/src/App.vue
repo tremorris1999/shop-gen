@@ -69,7 +69,10 @@ const toggleDrawer = () => (shouldShowDrawer.value = !shouldShowDrawer.value)
 
 const user = useUser()
 const isLoggedIn = computed(() => !!user.getCurrentUser().id)
-const logout = () => user.setCurrentUser(undefined)
+const logout = () => {
+  user.setCurrentUser(undefined)
+  router.push('/home')
+}
 
 const router = useRouter()
 const currentRoute = computed(() => router.currentRoute.value.name)
