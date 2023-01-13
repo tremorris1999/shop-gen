@@ -120,6 +120,7 @@ import Recipe from '@/types/recipe'
 import { ref, onMounted, computed, onBeforeMount } from 'vue'
 import ImageThumbnail from './ImageThumbnail.vue'
 import { toast } from 'vue3-toastify'
+import useUser from '@/composables/user'
 
 const props = defineProps<{
   recipe?: Recipe
@@ -177,6 +178,7 @@ const queueImageDelete = (id: string) => {
 
 const images = ref<File[]>([])
 const isSaving = ref(false)
+const user = useUser()
 
 const cancel = () => {
   emit('close')
@@ -206,6 +208,7 @@ const save = async () => {
     }
   } else {
     try {
+      currentRecipe.value.creatorId = user.getCurrentUser().id
       currentRecipe.value.id = await api.postRecipe(currentRecipe.value)
       for (let i = 0; i < images.value.length; i++) {
         await api.postImage(currentRecipe.value.id, images.value[i])
