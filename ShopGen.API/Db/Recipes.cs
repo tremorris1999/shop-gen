@@ -17,6 +17,7 @@ public class Recipes
     DataAdapter.ExecuteNonQuery("RecipeInsert", new()
     {
       { "@Id", id },
+      { "@CreatorId", recipe.CreatorId },
       { "@Name", recipe.Name },
       { "@Description", recipe.Description }
     });
