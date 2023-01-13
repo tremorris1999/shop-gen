@@ -59,7 +59,7 @@
         Remove
       </v-btn>
       <v-btn
-        v-if="!readonly"
+        v-if="isLoggedIn"
         :icon="favoriteIcon"
         :color="favoriteColor"
         @click="toggleFavorite"
@@ -87,6 +87,8 @@ const user = useUser()
 const canEdit = computed(
   () => !props.readonly && props.recipe.creatorId === user.getCurrentUser().id
 )
+const isLoggedIn = computed(() => !!user.getCurrentUser().id)
+
 const hasImages = computed(() => !!props.recipe.imageIds?.length ?? 0)
 const isEditing = ref(false)
 
