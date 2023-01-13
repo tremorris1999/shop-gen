@@ -15,8 +15,8 @@
     <span>Press the </span>
     <v-icon class="mx-2" icon="mdi-menu" />
     <span>
-      icon in the upper left corner to get access the application menu and get
-      started.
+      icon in the upper left corner to get access to the application menu and
+      get started.
     </span>
   </v-card>
 </template>
