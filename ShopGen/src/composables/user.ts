@@ -1,13 +1,12 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import User from '@/types/user'
 
-const user = ref<User>(
-  JSON.parse(localStorage.getItem('shopgen-current-user') || '{}') || User()
-)
+const localUser = JSON.parse(
+  localStorage.getItem('shopgen-current-user') || '{}'
+) as User
 
-const getCurrentUser = () => {
-  return { ...user.value }
-}
+const user = ref<User>()
+if (localUser.id) user.value = localUser
 
 const setCurrentUser = (newUser?: User) => {
   user.value = newUser || User()
@@ -16,7 +15,7 @@ const setCurrentUser = (newUser?: User) => {
 
 export const useUser = () => {
   return {
-    getCurrentUser,
+    user: computed(() => user.value),
     setCurrentUser,
   }
 }

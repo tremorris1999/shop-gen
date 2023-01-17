@@ -1,9 +1,14 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
-const plan = ref(localStorage.getItem('shopgen-my-plan')?.split(',') || [])
+const plan = ref(
+  localStorage
+    .getItem('shopgen-my-plan')
+    ?.split(',')
+    .filter(value => !!value) || []
+)
 
-const getPlanItems = () => [...plan.value]
 const clearPlan = () => {
+  console.log('cleared plan')
   plan.value = []
   localStorage.setItem('shopgen-my-plan', plan.value.join(','))
 }
@@ -22,7 +27,7 @@ const removeFromPlan = (id: string) => {
 
 export const usePlan = () => {
   return {
-    getPlanItems,
+    plan: computed(() => [...plan.value]),
     addToPlan,
     removeFromPlan,
     clearPlan,

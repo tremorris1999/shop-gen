@@ -29,9 +29,9 @@ import { useRouter } from 'vue-router'
 import RecipeCard from '@/components/RecipeCard.vue'
 
 const { recipes } = useRecipes()
-const favorites = useFavorites()
+const { favorites } = useFavorites()
 const favoriteRecipes = computed(() =>
-  recipes.value.filter(recipe => favorites.getFavorites().includes(recipe.id))
+  recipes.value.filter(recipe => favorites.value.includes(recipe.id))
 )
 const hasFavorites = computed(() => !!favoriteRecipes.value.length)
 

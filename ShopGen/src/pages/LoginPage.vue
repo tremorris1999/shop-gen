@@ -56,7 +56,7 @@ const router = useRouter()
 const email = ref('')
 const password = ref('')
 
-const user = useUser()
+const { user, setCurrentUser } = useUser()
 const isLoggingIn = ref(false)
 const login = async () => {
   isLoggingIn.value = true
@@ -66,7 +66,7 @@ const login = async () => {
       password: password.value,
     } as User)
 
-    user.setCurrentUser(currentUser)
+    setCurrentUser(currentUser)
     router.push('/home')
   } catch (err) {
     toast.error(`${err}`)
@@ -75,6 +75,6 @@ const login = async () => {
 }
 
 onBeforeMount(() => {
-  if (user.getCurrentUser().id) router.push('/home')
+  if (user.value?.id) router.push('/home')
 })
 </script>

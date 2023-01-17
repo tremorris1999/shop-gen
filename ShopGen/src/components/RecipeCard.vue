@@ -45,7 +45,7 @@
         color="secondary"
         variant="elevated"
         elevation="6"
-        @click="addToPlan(recipe)"
+        @click="addPlanItem(recipe)"
       >
         Add To Plan
       </v-btn>
@@ -54,7 +54,7 @@
         color="error"
         variant="elevated"
         elevation="6"
-        @click="plan.removeFromPlan(recipe.id)"
+        @click="removeFromPlan(recipe.id)"
       >
         Remove
       </v-btn>
@@ -84,27 +84,25 @@ const props = defineProps<{
   readonly?: boolean
 }>()
 
-const user = useUser()
+const { user } = useUser()
 const canEdit = computed(
-  () => !props.readonly && props.recipe.creatorId === user.getCurrentUser().id
+  () => !props.readonly && props.recipe.creatorId === user.value?.id
 )
-const isLoggedIn = computed(() => !!user.getCurrentUser().id)
+const isLoggedIn = computed(() => !!user.value?.id)
 
 const hasImages = computed(() => !!props.recipe.imageIds?.length ?? 0)
 const isEditing = ref(false)
 
 const getSource = (id: string) => `${api.imageURL}/${id}`
 
-const plan = usePlan()
-const addToPlan = (recipe: Recipe) => {
-  plan.addToPlan(recipe.id)
+const { addToPlan, removeFromPlan } = usePlan()
+const addPlanItem = (recipe: Recipe) => {
+  addToPlan(recipe.id)
   toast.success(`Added ${recipe.name} to plan!`)
 }
 
-const favorites = useFavorites()
-const isFavorite = computed(() =>
-  favorites.getFavorites().includes(props.recipe.id)
-)
+const { favorites, addToFavorites, removeFromFavorites } = useFavorites()
+const isFavorite = computed(() => favorites.value.includes(props.recipe.id))
 const favoriteIcon = computed<string>(() =>
   isFavorite.value ? 'mdi-heart' : 'mdi-heart-outline'
 )
@@ -113,7 +111,7 @@ const favoriteColor = computed<string>(() =>
 )
 const toggleFavorite = () => {
   console.log(isFavorite.value)
-  if (isFavorite.value) favorites.removeFromFavorites(props.recipe.id)
-  else favorites.addToFavorites(props.recipe.id)
+  if (isFavorite.value) removeFromFavorites(props.recipe.id)
+  else addToFavorites(props.recipe.id)
 }
 </script>

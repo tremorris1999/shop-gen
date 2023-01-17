@@ -67,10 +67,10 @@ const theme = useTheme()
 const shouldShowDrawer = ref(false)
 const toggleDrawer = () => (shouldShowDrawer.value = !shouldShowDrawer.value)
 
-const user = useUser()
-const isLoggedIn = computed(() => !!user.getCurrentUser().id)
+const { user, setCurrentUser } = useUser()
+const isLoggedIn = computed(() => !!user.value?.id)
 const logout = () => {
-  user.setCurrentUser(undefined)
+  setCurrentUser(undefined)
   router.push('/home')
 }
 
@@ -86,10 +86,16 @@ const availableRoutes = computed(() =>
 
 const navigate = (path: string) => router.push(path)
 
-const plan = usePlan()
+const { plan } = usePlan()
 const planLength = computed(() => {
-  const items = plan.getPlanItems().filter(id => !!id)
+  const items = plan.value.filter(id => !!id)
   const length = items.length
   return length > 8 ? '9+' : length
 })
 </script>
+
+<style>
+.v-toolbar-title__placeholder {
+  overflow: visible;
+}
+</style>

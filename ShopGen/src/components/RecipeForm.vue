@@ -178,7 +178,7 @@ const queueImageDelete = (id: string) => {
 
 const images = ref<File[]>([])
 const isSaving = ref(false)
-const user = useUser()
+const { user } = useUser()
 
 const cancel = () => {
   emit('close')
@@ -208,7 +208,7 @@ const save = async () => {
     }
   } else {
     try {
-      currentRecipe.value.creatorId = user.getCurrentUser().id
+      currentRecipe.value.creatorId = user.value?.id || ''
       currentRecipe.value.id = await api.postRecipe(currentRecipe.value)
       for (let i = 0; i < images.value.length; i++) {
         await api.postImage(currentRecipe.value.id, images.value[i])

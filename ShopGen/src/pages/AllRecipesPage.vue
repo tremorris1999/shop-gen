@@ -50,8 +50,8 @@ const filteredRecipes = computed(() => {
 
 const query = ref('')
 
-const user = useUser()
-const isLoggedIn = computed(() => !!user.getCurrentUser().id)
+const { user } = useUser()
+const isLoggedIn = computed(() => !!user.value?.id)
 const isLoading = computed(() => !recipes.value)
 const isEditing = ref(false)
 </script>

@@ -1,7 +1,10 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const favorites = ref<string[]>(
-  localStorage.getItem('shopgen-favorites')?.split(',') || []
+  localStorage
+    .getItem('shopgen-favorites')
+    ?.split(',')
+    .filter(value => !!value) || []
 )
 const addToFavorites = (recipeId: string) => {
   favorites.value.splice(favorites.value.length, 0, recipeId)
@@ -14,13 +17,12 @@ const removeFromFavorites = (recipeId: string) => {
     localStorage.setItem('shopgen-favorites', favorites.value.join(','))
   }
 }
-const getFavorites = () => [...favorites.value]
 
 const useFavorites = () => {
   return {
+    favorites: computed(() => [...favorites.value]),
     addToFavorites,
     removeFromFavorites,
-    getFavorites,
   }
 }
 

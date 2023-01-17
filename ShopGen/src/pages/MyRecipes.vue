@@ -37,13 +37,13 @@ import useUser from '@/composables/user'
 import { useRouter } from 'vue-router'
 
 const { recipes } = useRecipes()
-const user = useUser()
+const { user } = useUser()
 const filteredRecipes = computed(() => {
   const regex = new RegExp(`^${query.value}`)
   const filtered = query.value
     ? recipes.value.filter(r => regex.test(r.name))
     : recipes.value
-  return filtered.filter(r => r.creatorId === user.getCurrentUser().id)
+  return filtered.filter(r => r.creatorId === user.value?.id)
 })
 
 const query = ref('')
@@ -53,7 +53,7 @@ const isEditing = ref(false)
 
 const router = useRouter()
 onBeforeMount(() => {
-  if (!user.getCurrentUser().id) router.push('/home')
+  if (!user.value?.id) router.push('/home')
 })
 </script>
 

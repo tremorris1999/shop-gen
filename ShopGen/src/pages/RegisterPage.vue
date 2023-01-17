@@ -80,7 +80,7 @@ const isFilled = computed(
 const form = ref<VForm>()
 const isLoading = ref(false)
 const router = useRouter()
-const user = useUser()
+const { user, setCurrentUser } = useUser()
 const submit = async () => {
   const { valid } = (await form.value?.validate()) ?? { valid: false }
   if (valid) {
@@ -90,7 +90,7 @@ const submit = async () => {
       newUser.email = email.value
       newUser.password = password.value
       newUser = await api.register(newUser)
-      user.setCurrentUser(newUser)
+      setCurrentUser(newUser)
       router.push('/home')
     } catch (err) {
       toast.error(`${err}`)
@@ -101,6 +101,6 @@ const submit = async () => {
 }
 
 onBeforeMount(() => {
-  if (user.getCurrentUser().id) router.push('/home')
+  if (user.value?.id) router.push('/home')
 })
 </script>
