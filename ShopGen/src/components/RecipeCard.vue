@@ -45,7 +45,7 @@
         color="secondary"
         variant="elevated"
         elevation="6"
-        @click="plan.addToPlan(recipe.id)"
+        @click="addToPlan(recipe)"
       >
         Add To Plan
       </v-btn>
@@ -77,6 +77,7 @@ import RecipeForm from './RecipeForm.vue'
 import usePlan from '@/composables/plan'
 import useUser from '@/composables/user'
 import useFavorites from '@/composables/favorites'
+import { toast } from 'vue3-toastify'
 
 const props = defineProps<{
   recipe: Recipe
@@ -95,6 +96,10 @@ const isEditing = ref(false)
 const getSource = (id: string) => `${api.imageURL}/${id}`
 
 const plan = usePlan()
+const addToPlan = (recipe: Recipe) => {
+  plan.addToPlan(recipe.id)
+  toast.success(`Added ${recipe.name} to plan!`)
+}
 
 const favorites = useFavorites()
 const isFavorite = computed(() =>
