@@ -7,10 +7,10 @@ const router = createRouter({
   routes: routes as RouteRecordRaw[],
 })
 
-const user = useUser()
+const { user } = useUser()
 router.beforeEach(to => {
   const route = routes.find(r => r.path == to.path)
-  if (to.path !== '/login' && route?.loggedIn && !user.getCurrentUser()) {
+  if (to.path !== '/login' && route?.loggedIn && !user.value) {
     return { path: '/login' }
   }
 })
