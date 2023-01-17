@@ -18,6 +18,7 @@
         color="secondary"
         class="mt-3 mb-9 mx-2"
         variant="tonal"
+        @click="generateShoppingList"
       >
         Generate List
       </v-btn>
@@ -26,7 +27,7 @@
         color="error"
         class="mt-3 mb-9 mx-2"
         variant="tonal"
-        @click="plan.clearPlan"
+        @click="clearPlan"
       >
         Clear Plan
       </v-btn>
@@ -45,15 +46,16 @@
 import RecipeCard from '@/components/RecipeCard.vue'
 import usePlan from '@/composables/plan'
 import useRecipes from '@/composables/recipes'
+import useShoppingList from '@/composables/shoppingList'
 import Recipe from '@/types/recipe'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-const plan = usePlan()
+const { plan, clearPlan } = usePlan()
 const { recipes } = useRecipes()
 const plannedRecipes = computed(() => {
   const planned = [] as Recipe[]
-  plan.getPlanItems().forEach(id => {
+  plan.value.forEach(id => {
     const selected = recipes.value.find(recipe => recipe.id == id)
     if (selected) planned.push(selected)
   })
@@ -64,4 +66,10 @@ const hasRecipes = computed(() => !!plannedRecipes.value.length)
 
 const router = useRouter()
 const navigateToRecipes = () => router.push('/recipes')
+
+const { generateList } = useShoppingList()
+const generateShoppingList = () => {
+  generateList()
+  router.push('/mylist')
+}
 </script>

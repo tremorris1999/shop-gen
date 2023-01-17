@@ -6,6 +6,7 @@ import RegisterPage from '@/pages/RegisterPage.vue'
 import MyRecipesPage from '@/pages/MyRecipes.vue'
 import FavoritesPage from '@/pages/FavoritesPage.vue'
 import SettingsPage from '@/pages/SettingsPage.vue'
+import ShoppingListPage from '@/pages/ShoppingListPage.vue'
 
 export const Route = () => ({
   icon: '',
@@ -45,5 +46,11 @@ export default [
     path: '/settings',
     component: SettingsPage,
     icon: 'mdi-cog',
+  },
+  {
+    name: 'My Shopping List',
+    path: '/mylist',
+    component: ShoppingListPage,
+    icon: 'mdi-home',
   },
 ]
