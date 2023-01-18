@@ -59,6 +59,6 @@ export default {
     await api.post<null, User>('/Auth/Register', user),
 
   // list
-  generateList: async (recipes: string[]) =>
-    await api.post<null, Ingredient[]>('/Ingredients/Generate', recipes),
+  generateList: async (recipesIds: string[]) =>
+    await api.post<null, Ingredient[]>('/Ingredients/Generate', recipesIds),
 }

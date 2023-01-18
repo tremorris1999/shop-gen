@@ -9,12 +9,12 @@
       <v-col cols="1" class="pb-n2">
         <v-checkbox v-model="isChecked" />
       </v-col>
-      <v-col cols="8" class="px-4 pt-4">
+      <v-col cols="7" class="px-4 pt-4">
         <div id="name" :class="isChecked ? 'text-decoration-line-through' : ''">
           {{ listItem.ingredient.name }}
         </div>
       </v-col>
-      <v-col cols="3" class="pt-4 pr-2 text-right">
+      <v-col id="amount" cols="4" class="pt-4 pr-2 text-right">
         {{ listItem.ingredient.quantity }}
         <span class="text-caption text-medium-emphasis mx-1"> x </span>
         {{ listItem.ingredient.unit }}
@@ -63,6 +63,12 @@ watch(isChecked, newValue => {
 }
 
 #name {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#amount {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

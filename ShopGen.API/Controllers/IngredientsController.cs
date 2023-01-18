@@ -34,4 +34,11 @@ public class IngredientsController : ControllerBase
     Ingredients.DeleteIngredient(id);
     return new OkResult();
   }
+
+  [HttpPost("Generate")]
+  public IActionResult GenerateList(Guid[] recipeIds)
+  {
+    return new OkObjectResult(Ingredients.GenerateList(recipeIds));
+  }
+
 }

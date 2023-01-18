@@ -1,8 +1,8 @@
 import { ref, computed } from 'vue'
 import ShoppingListItem from '@/types/shoppingListItem'
-import useRecipes from './recipes'
 import api from '@/api'
 import { toast } from 'vue3-toastify'
+import usePlan from './plan'
 
 const localList = JSON.parse(
   localStorage.getItem('shopgen-mylist-items') || '[]'
@@ -35,12 +35,10 @@ const setInactive = (id: string) => {
   )
 }
 
-const { recipes } = useRecipes()
+const { plan } = usePlan()
 const generateList = async () => {
   try {
-    const ingredients = await api.generateList(
-      recipes.value.map(recipe => recipe.id)
-    )
+    const ingredients = await api.generateList(plan.value)
 
     shoppingList.value = ingredients.map(ingredient => ({
       ingredient,

@@ -39,7 +39,11 @@
             @click="isShowingIngredients = false"
             >Close</v-btn
           >
-          <v-btn v-if="!readonly" color="secondary" variant="tonal"
+          <v-btn
+            v-if="!readonly"
+            color="secondary"
+            variant="tonal"
+            @click="addPlanItem"
             >Add To Plan</v-btn
           >
           <v-btn v-if="readonly" color="error" variant="tonal"
@@ -53,6 +57,7 @@
 
 <script setup lang="ts">
 import api from '@/api'
+import usePlan from '@/composables/plan'
 import Ingredient from '@/types/ingredient'
 import { ref, computed } from 'vue'
 import { toast } from 'vue3-toastify'
@@ -74,4 +79,10 @@ const getIngredients = async () => {
 }
 
 const isShowingIngredients = ref(false)
+
+const { addToPlan } = usePlan()
+const addPlanItem = () => {
+  addToPlan(props.id)
+  toast.success(`Added ${props.name} to plan!`)
+}
 </script>
