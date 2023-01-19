@@ -3,7 +3,7 @@
     <v-card-title>
       {{ currentRecipe.name }}
     </v-card-title>
-    <v-card-text style="max-height: 464px">
+    <v-card-text style="max-height: 524px">
       <v-form>
         <v-text-field v-model="currentRecipe.name" label="Name" />
         <v-text-field v-model="currentRecipe.description" label="Description" />

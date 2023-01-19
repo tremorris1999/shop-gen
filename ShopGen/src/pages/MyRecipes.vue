@@ -11,7 +11,7 @@
     <v-row justify="center" class="mx-auto mt-2 mb-4">
       <v-btn class="button" color="primary" variant="outlined">
         <v-icon icon="mdi-plus" /> Add
-        <v-dialog v-model="isEditing" activator="parent">
+        <v-dialog v-model="isEditing" activator="parent" scrollable persistent>
           <RecipeForm @close="isEditing = false" />
         </v-dialog>
       </v-btn>
