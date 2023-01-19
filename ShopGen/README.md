@@ -1,44 +1,13 @@
-# default
+# ShopGen (web)
 
-## Project setup
+To run the web app, I would personally recommend [Bun](https://bun.sh) for your runtime and package manager. Bun has the capacity to install packages up to 100x faster on linux. Bun also supports typescript and JSX/TSX fresh out of the box without configuration.
 
+## Run
+
+```sh
+#Bun
+bun i && bun run dev
+
+#npm (not reccommended)
+npm i && npm run dev
 ```
-# yarn
-yarn
-
-# npm
-npm install
-
-# pnpm
-pnpm install
-```
-
-### Compiles and hot-reloads for development
-
-```
-# yarn
-yarn dev
-
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-```
-
-### Compiles and minifies for production
-
-```
-# yarn
-yarn build
-
-# npm
-npm run build
-
-# pnpm
-pnpm build
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://vitejs.dev/config/).
