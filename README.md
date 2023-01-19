@@ -29,11 +29,11 @@ The backend needs a few more variables set. For the ConnectionStrings requiremen
 ```json
 ... /** other configuration */
 
-ConnectionStrings: {
+"ConnectionStrings": {
   "key": "value" /** connection string to your database  */
 },
-Urls: "url_for_hosting:port", /** {http/https/localhost}:port */
-Keys: {
+"Urls": "url_for_hosting:port", /** {http/https/localhost}:port */
+"Keys": {
   "HashKey": "encryption_string_for_passwords" /** can use any string here */
 }
 ```
